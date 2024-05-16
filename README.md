@@ -15,7 +15,7 @@ typeauth is a TypeScript library that simplifies the authentication process for 
 You can install typeauth using npm:
 
 ```bash
-npm installs @typeauth/api
+npm install @typeauth/api
 ```
 
 ## Usage
