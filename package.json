@@ -11,7 +11,8 @@
   "scripts": {
     "build": "tsup",
     "lint": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "release": "pnpm run build && changeset publish"
   },
   "repository": {
     "type": "git",
