@@ -12,7 +12,7 @@
     "build": "tsup",
     "lint": "tsc",
     "test": "jest",
-    "release": "pnpm run build && changeset publish"
+    "release": "npm run build && changeset publish"
   },
   "repository": {
     "type": "git",
