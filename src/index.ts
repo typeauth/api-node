@@ -112,7 +112,7 @@ export class Typeauth {
           const data = await response.json();
           return { data };
         } else {
-          const errorMessage = `Typeauth API request failed with status: ${response.status}`;
+          const errorMessage = `typeauth API request failed with status: ${response.status}`;
           return { error: { message: errorMessage } };
         }
       } catch (error) {
@@ -120,7 +120,7 @@ export class Typeauth {
         if (retries === this.maxRetries) {
           return {
             error: {
-              message: "Typeauth API request failed after multiple retries",
+              message: "typeauth API request failed after multiple retries",
             },
           };
         }
