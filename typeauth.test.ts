@@ -1,4 +1,5 @@
 import { Typeauth, TypeauthOptions } from './src/index';
+import { IncomingMessage } from 'http';
 
 describe("Typeauth", () => {
   let typeauth: Typeauth;
@@ -33,7 +34,11 @@ describe("Typeauth", () => {
   });
 
   it("should return an error when token is missing", async () => {
-    const mockRequest = new Request("https://api.typeauth.com");
+    const mockRequest = {
+      url: "https://api.typeauth.com",
+      headers: {},
+    } as IncomingMessage;
+
     const response = await typeauth.authenticate(mockRequest);
 
     expect(response).toHaveProperty("error");
@@ -45,15 +50,18 @@ describe("Typeauth", () => {
   });
 
   it("should authenticate successfully with valid token", async () => {
-    const mockRequest = new Request("https://example.com", {
+    const mockRequest = {
+      url: "https://example.com",
       headers: {
-        Authorization: `Bearer ${mockToken}`,
+        authorization: `Bearer ${mockToken}`,
       },
-    });
+    } as IncomingMessage;
+
     const mockSuccessResponse = {
       success: true,
       valid: true,
     };
+
     global.fetch = jest.fn().mockResolvedValueOnce({
       ok: true,
       json: jest.fn().mockResolvedValueOnce(mockSuccessResponse),

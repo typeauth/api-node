@@ -1,13 +1,2 @@
-.env*
-!.env.example
-rm
-
 node_modules
 dist
-
-
-.DS_Store
-.vscode
-.dev.vars
-.wrangler
-.vitest
