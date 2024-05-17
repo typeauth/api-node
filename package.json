@@ -1,11 +1,16 @@
 {
   "name": "@typeauth/api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc",
-
+    "build": "tsup",
+    "lint": "tsc",
     "test": "jest"
   },
   "repository": {
@@ -23,6 +28,7 @@
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.12",
     "ts-jest": "^29.1.2",
+    "tsup": "^8.0.2",
     "typescript": "^5.4.5"
   }
 }
