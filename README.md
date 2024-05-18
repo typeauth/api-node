@@ -36,8 +36,8 @@ const typeauth = new typeauth({
   baseUrl: "https://api.typeauth.com",
   tokenHeader: "Authorization",
   disableTelemetry: false,
-  maxRetries = 5,
-  retryDelay = 2000,
+  maxRetries: 5,
+  retryDelay: 2000,
 });
 ```
 
