@@ -1,6 +1,6 @@
 # Typescript typeauth library
 
-typeauth is a TypeScript library that simplifies the authentication process for your web applications. It provides an easy-to-use interface for integrating with the typeauth authentication service.
+@typeauth/api-node is a TypeScript library that simplifies the authentication process for your API applications running in node. It's a wrapper around the authentication API endpoint.
 
 ## Features
 
@@ -8,6 +8,7 @@ typeauth is a TypeScript library that simplifies the authentication process for 
 - Customizable options for initialization
 - Support for custom token headers
 - Telemetry data collection (can be disabled)
+- Customizable opetion for retry and delay
 - Comprehensive error handling and documentation references
 
 ## Installation
@@ -15,7 +16,7 @@ typeauth is a TypeScript library that simplifies the authentication process for 
 You can install typeauth using npm:
 
 ```bash
-npm install @typeauth/api
+npm install @typeauth/api-node
 ```
 
 ## Usage
@@ -23,18 +24,20 @@ npm install @typeauth/api
 First, import the `typeauth` class from the library:
 
 ```typescript
-import { typeauth } from 'typeauth';
+import { typeauth } from "@typeauth/api-node";
 ```
 
 Then, initialize the `typeauth` instance with your desired options:
 
 ```typescript
 const typeauth = new typeauth({
-  appId: 'YOUR_APP_ID',
+  appId: "YOUR_APP_ID",
   // Optional configuration options
-  baseUrl: 'https://api.typeauth.com',
-  tokenHeader: 'Authorization',
+  baseUrl: "https://api.typeauth.com",
+  tokenHeader: "Authorization",
   disableTelemetry: false,
+  maxRetries = 5,
+  retryDelay = 2000,
 });
 ```
 
@@ -46,16 +49,16 @@ async function handleRequest(req: Request): Promise<Response> {
 
   if (error) {
     console.error(error.message);
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 
   // Protected route logic
-  return new Response(JSON.stringify({ message: 'Access granted' }), {
+  return new Response(JSON.stringify({ message: "Access granted" }), {
     status: 200,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   });
 }
 ```
@@ -68,6 +71,8 @@ The `typeauth` constructor accepts an options object with the following properti
 - `baseUrl` (optional): The base URL of the typeauth API. Defaults to `'https://api.typeauth.com'`.
 - `tokenHeader` (optional): The name of the header that contains the authentication token. Defaults to `'Authorization'`.
 - `disableTelemetry` (optional): Set to `true` to disable telemetry data collection. Defaults to `false`.
+- `maxRetries` (optional): The number of tries in case the typeauth API is not responding. Defaults to `3`.
+- `retryDelay` (optional): // The number of milisendseconds before send another requests. Defauls to `1000`.
 
 ## Error Handling
 
@@ -83,10 +88,10 @@ Make sure to handle errors appropriately in your application logic.
 Here's an example of how to use typeauth with the Web API:
 
 ```typescript
-import { typeauth } from 'typeauth';
+import { typeauth } from "typeauth";
 
 const typeauth = new typeauth({
-  appId: 'YOUR_APP_ID',
+  appId: "YOUR_APP_ID",
 });
 
 async function handleRequest(req: Request): Promise<Response> {
@@ -94,23 +99,18 @@ async function handleRequest(req: Request): Promise<Response> {
 
   if (error) {
     console.error(error.message);
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     });
   }
 
   // Protected route logic
-  return new Response(JSON.stringify({ message: 'Access granted' }), {
+  return new Response(JSON.stringify({ message: "Access granted" }), {
     status: 200,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   });
 }
-
-// Example usage with the Web API
-addEventListener('fetch', (event) => {
-  event.respondWith(handleRequest(event.request));
-});
 ```
 
 ## Contributing
