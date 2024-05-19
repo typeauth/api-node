@@ -44,23 +44,38 @@ const typeauth = new typeauth({
 To authenticate a request, call the `authenticate` method with the request object:
 
 ```typescript
-async function handleRequest(req: Request): Promise<Response> {
-  const { result, error } = await typeauth.authenticate(req);
+const express = require("express");
+const { Typeauth } = require("@typeauth/api-node");
 
-  if (error) {
-    console.error(error.message);
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: { "Content-Type": "application/json" },
-    });
+const app = express();
+
+// Initialize the Typeauth client
+const typeauth = new Typeauth({
+  baseUrl: "https://api.typeauth.com",
+  appId: "YOUR_APP_ID",
+  // Other options if needed
+});
+
+// Middleware to authenticate POST requests
+const authenticatePostRequest = async (req, res, next) => {
+  if (req.method === "POST") {
+    const { result, error } = await typeauth.authenticate(req);
+
+    if (error) {
+      console.error(error.message);
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    return res.status(200).json({ message: "OK" });
+    next();
+  } else {
+    // If not a POST request, proceed to the next middleware or route handler
+    next();
   }
+};
 
-  // Protected route logic
-  return new Response(JSON.stringify({ message: "Access granted" }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+// Apply the authentication middleware to all routes
+app.use(authenticatePostRequest);
 ```
 
 ## Configuration Options
