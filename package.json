@@ -1,6 +1,6 @@
 {
   "name": "@typeauth/api-node",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -11,8 +11,7 @@
   "scripts": {
     "build": "tsup",
     "lint": "tsc",
-    "test": "jest",
-    "release": "npm run build && changeset publish"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
