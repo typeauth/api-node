@@ -96,36 +96,6 @@ The `authenticate` method returns an object with either a `result` property (on 
 
 Make sure to handle errors appropriately in your application logic.
 
-## Examples
-
-Here's an example of how to use typeauth with the Web API:
-
-```typescript
-import { typeauth } from "typeauth";
-
-const typeauth = new typeauth({
-  appId: "YOUR_APP_ID",
-});
-
-async function handleRequest(req: Request): Promise<Response> {
-  const { result, error } = await typeauth.authenticate(req);
-
-  if (error) {
-    console.error(error.message);
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-
-  // Protected route logic
-  return new Response(JSON.stringify({ message: "Access granted" }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-```
-
 ## Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvement, please open an issue or submit a pull request on the this GitHub repository.
