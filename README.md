@@ -51,7 +51,6 @@ const app = express();
 
 // Initialize the Typeauth client
 const typeauth = new Typeauth({
-  baseUrl: "https://api.typeauth.com",
   appId: "YOUR_APP_ID",
   // Other options if needed
 });
