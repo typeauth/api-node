@@ -82,7 +82,6 @@ app.use(authenticatePostRequest);
 The `typeauth` constructor accepts an options object with the following properties:
 
 - `appId` (required): Your typeauth application ID.
-- `baseUrl` (optional): The base URL of the typeauth API. Defaults to `'https://api.typeauth.com'`.
 - `tokenHeader` (optional): The name of the header that contains the authentication token. Defaults to `'Authorization'`.
 - `disableTelemetry` (optional): Set to `true` to disable telemetry data collection. Defaults to `false`.
 - `maxRetries` (optional): The number of tries in case the typeauth API is not responding. Defaults to `3`.
