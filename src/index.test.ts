@@ -1,5 +1,5 @@
-import { Typeauth, TypeauthOptions } from './src/index';
 import { IncomingMessage } from 'http';
+import { Typeauth, TypeauthOptions } from '.';
 
 describe("Typeauth", () => {
   let typeauth: Typeauth;
