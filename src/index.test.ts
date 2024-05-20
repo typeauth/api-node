@@ -1,5 +1,5 @@
-import { IncomingMessage } from 'http';
-import { Typeauth, TypeauthOptions } from '.';
+import { IncomingMessage } from "http";
+import { Typeauth, TypeauthOptions } from ".";
 
 describe("Typeauth", () => {
   let typeauth: Typeauth;
@@ -57,15 +57,23 @@ describe("Typeauth", () => {
       },
     } as IncomingMessage;
 
-    const mockSuccessResponse = {
-      success: true,
-      valid: true,
-    };
-
-    global.fetch = jest.fn().mockResolvedValueOnce({
+    global.fetch = jest.fn().mockResolvedValue({
       ok: true,
-      json: jest.fn().mockResolvedValueOnce(mockSuccessResponse),
-    } as unknown as Response);
+      json: jest.fn().mockResolvedValue({
+        success: true,
+        message: "",
+        data: [
+          {
+            valid: true,
+            ratelimit: {
+              remaining: 0,
+            },
+            remaining: 0,
+            enabled: true,
+          },
+        ],
+      }),
+    });
 
     const response = await typeauth.authenticate(mockRequest);
 

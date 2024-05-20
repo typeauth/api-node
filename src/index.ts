@@ -17,6 +17,19 @@ export interface TypeauthResponse<T> {
   };
 }
 
+interface AuthenticateResponse {
+  success: boolean;
+  message: string;
+  data: {
+    valid: boolean;
+    ratelimit: {
+      remaining: number;
+    };
+    remaining: number;
+    enabled: boolean;
+  }[];
+}
+
 export class Typeauth {
   private readonly baseUrl: string;
   private readonly appId: string;
@@ -61,7 +74,7 @@ export class Typeauth {
           },
     });
 
-    const result = await this.fetch<{ success: boolean; valid: boolean }>({
+    const result = await this.fetch<AuthenticateResponse>({
       url,
       method: "POST",
       headers: {
@@ -80,16 +93,16 @@ export class Typeauth {
     }
 
     const data = result.data;
-    if (!data?.success || !data.valid) {
+    if (data?.success && data?.data?.[0]?.valid) {
+      return { result: true };
+    } else {
       return {
         error: {
-          message: "Typeauth authentication failed",
+          message: data?.message || "Typeauth authentication failed",
           docs: "https://docs.typeauth.com/errors/authentication",
         },
       };
     }
-
-    return { result: true };
   }
 
   private async fetch<TResult>(request: {
